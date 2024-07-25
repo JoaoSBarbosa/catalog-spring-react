@@ -3,10 +3,9 @@ package br.com.joaobarbosadev.wolfcatalogv2.controllers;
 import br.com.joaobarbosadev.wolfcatalogv2.dto.CategoryDTO;
 import br.com.joaobarbosadev.wolfcatalogv2.entities.Category;
 import br.com.joaobarbosadev.wolfcatalogv2.services.CategoryService;
+import jakarta.persistence.Id;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,5 +25,11 @@ public class CategoryController {
         List<CategoryDTO> categories = categoryService.findAll();
 
         return ResponseEntity.ok(categories);
+    }
+
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<CategoryDTO> findById(@PathVariable Long id) {
+        CategoryDTO dto = categoryService.findByID(id);
+        return ResponseEntity.ok(dto);
     }
 }
