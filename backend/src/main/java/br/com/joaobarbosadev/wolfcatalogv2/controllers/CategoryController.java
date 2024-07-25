@@ -1,5 +1,6 @@
 package br.com.joaobarbosadev.wolfcatalogv2.controllers;
 
+import br.com.joaobarbosadev.wolfcatalogv2.dto.CategoryDTO;
 import br.com.joaobarbosadev.wolfcatalogv2.entities.Category;
 import br.com.joaobarbosadev.wolfcatalogv2.services.CategoryService;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +22,8 @@ public class CategoryController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Category>> findAll() {
-        List<Category> categories = categoryService.findAll();
+    public ResponseEntity<List<CategoryDTO>> findAll() {
+        List<CategoryDTO> categories = categoryService.findAll();
 
         return ResponseEntity.ok(categories);
     }

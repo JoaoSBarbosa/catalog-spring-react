@@ -1,5 +1,6 @@
 package br.com.joaobarbosadev.wolfcatalogv2.services;
 
+import br.com.joaobarbosadev.wolfcatalogv2.dto.CategoryDTO;
 import br.com.joaobarbosadev.wolfcatalogv2.entities.Category;
 import br.com.joaobarbosadev.wolfcatalogv2.repositories.CategoryRepository;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,9 @@ public class CategoryService {
     }
 
     @Transactional(readOnly = true)
-    public List<Category> findAll() {
-        return categoryRepository.findAll();
+    public List<CategoryDTO> findAll() {
+        List<Category> categoryList = categoryRepository.findAll();
+
+        return categoryList.stream().map(CategoryDTO::new).toList();
     }
 }
