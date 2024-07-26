@@ -3,6 +3,7 @@ package br.com.joaobarbosadev.wolfcatalogv2.controllers;
 import br.com.joaobarbosadev.wolfcatalogv2.dto.CategoryDTO;
 import br.com.joaobarbosadev.wolfcatalogv2.entities.Category;
 import br.com.joaobarbosadev.wolfcatalogv2.services.CategoryService;
+import br.com.joaobarbosadev.wolfcatalogv2.services.exceptions.ControllerNullValuesException;
 import jakarta.persistence.Id;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,5 +32,14 @@ public class CategoryController {
     public ResponseEntity<CategoryDTO> findById(@PathVariable Long id) {
         CategoryDTO dto = categoryService.findByID(id);
         return ResponseEntity.ok(dto);
+    }
+
+    @PostMapping
+    public ResponseEntity<CategoryDTO> saveCategory(@RequestBody CategoryDTO categoryDTO){
+        if(categoryDTO.getName() == null){
+            throw new ControllerNullValuesException("O campo 'Nome' é obrigatório!");
+        }
+        categoryDTO = categoryService.insert(categoryDTO);
+        return ResponseEntity.ok(categoryDTO);
     }
 }

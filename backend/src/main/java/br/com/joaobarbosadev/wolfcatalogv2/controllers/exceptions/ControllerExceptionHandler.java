@@ -2,6 +2,7 @@ package br.com.joaobarbosadev.wolfcatalogv2.controllers.exceptions;
 
 import br.com.joaobarbosadev.wolfcatalogv2.component.exceptions.StandardError;
 import br.com.joaobarbosadev.wolfcatalogv2.services.exceptions.ControllerNotFoundException;
+import br.com.joaobarbosadev.wolfcatalogv2.services.exceptions.ControllerNullValuesException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,18 @@ public class ControllerExceptionHandler {
         HttpStatus status = HttpStatus.NOT_FOUND;
         error.setMessage(ex.getMessage());
         error.setError("Entidade não localizada 😶‍🌫️");
+        error.setTimestamp(Instant.now());
+        error.setStatus(status.value());
+        error.setPath(request.getRequestURI());
+        return new ResponseEntity<>(error, status);
+    }
+
+    @ExceptionHandler(ControllerNullValuesException.class)
+    public ResponseEntity<StandardError> nullValues(ControllerNullValuesException ex, HttpServletRequest request) {
+        StandardError error = new StandardError();
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        error.setMessage(ex.getMessage());
+        error.setError("Ausencia de valores obrigatórios 😶‍🌫️");
         error.setTimestamp(Instant.now());
         error.setStatus(status.value());
         error.setPath(request.getRequestURI());
