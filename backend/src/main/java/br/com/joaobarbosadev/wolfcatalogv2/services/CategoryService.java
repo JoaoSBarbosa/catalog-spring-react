@@ -3,6 +3,7 @@ package br.com.joaobarbosadev.wolfcatalogv2.services;
 import br.com.joaobarbosadev.wolfcatalogv2.dto.CategoryDTO;
 import br.com.joaobarbosadev.wolfcatalogv2.entities.Category;
 import br.com.joaobarbosadev.wolfcatalogv2.repositories.CategoryRepository;
+import br.com.joaobarbosadev.wolfcatalogv2.services.exceptions.ControllerNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,7 +29,9 @@ public class CategoryService {
     @Transactional(readOnly = true)
     public CategoryDTO findByID(Long id) {
         Optional<Category> category = categoryRepository.findById(id);
-        return category.map(CategoryDTO::new).orElse(null);
+        return category.map(CategoryDTO::new).orElseThrow(()-> new ControllerNotFoundException("Não existe registros de categoria com o id informado: "+id));
+
+//        return new CategoryDTO(category.get());
     }
 
 }
