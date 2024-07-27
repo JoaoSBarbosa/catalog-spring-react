@@ -5,6 +5,7 @@ import br.com.joaobarbosadev.wolfcatalogv2.entities.Category;
 import br.com.joaobarbosadev.wolfcatalogv2.repositories.CategoryRepository;
 import br.com.joaobarbosadev.wolfcatalogv2.services.exceptions.ControllerNotFoundException;
 import br.com.joaobarbosadev.wolfcatalogv2.services.exceptions.ControllerNullValuesException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,7 +48,17 @@ public class CategoryService {
         return new CategoryDTO(entity);
     }
 
-    public CategoryDTO update(CategoryDTO categoryDTO) {
-        return null;
+    @Transactional
+    public CategoryDTO update(CategoryDTO categoryDTO, Long id) {
+        try {
+            Category category = categoryRepository.getReferenceById(id);
+            category.setName(categoryDTO.getName());
+
+            category = categoryRepository.save(category);
+            return new CategoryDTO(category);
+        } catch (EntityNotFoundException e) {
+            throw new ControllerNotFoundException("Não foi localizado registro de categoria com o id informado: " + id);
+        }
+
     }
 }
