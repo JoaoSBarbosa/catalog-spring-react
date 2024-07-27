@@ -7,7 +7,9 @@ import br.com.joaobarbosadev.wolfcatalogv2.services.exceptions.ControllerNullVal
 import jakarta.persistence.Id;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,11 +37,15 @@ public class CategoryController {
     }
 
     @PostMapping
-    public ResponseEntity<CategoryDTO> saveCategory(@RequestBody CategoryDTO categoryDTO){
-        if(categoryDTO.getName() == null){
-            throw new ControllerNullValuesException("O campo 'Nome' é obrigatório!");
-        }
+    public ResponseEntity<CategoryDTO> saveCategory(@RequestBody CategoryDTO categoryDTO) {
         categoryDTO = categoryService.insert(categoryDTO);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(categoryDTO.getId()).toUri();
+        return ResponseEntity.created(uri).body(categoryDTO);
+    }
+
+    @PutMapping
+    public ResponseEntity<CategoryDTO> updateCategory(@RequestBody CategoryDTO categoryDTO) {
+        categoryDTO = categoryService.update(categoryDTO);
         return ResponseEntity.ok(categoryDTO);
     }
 }
