@@ -1,6 +1,7 @@
 package br.com.joaobarbosadev.wolfcatalogv2.controllers.exceptions;
 
 import br.com.joaobarbosadev.wolfcatalogv2.component.exceptions.StandardError;
+import br.com.joaobarbosadev.wolfcatalogv2.services.exceptions.ControllerDataViolationException;
 import br.com.joaobarbosadev.wolfcatalogv2.services.exceptions.ControllerNotFoundException;
 import br.com.joaobarbosadev.wolfcatalogv2.services.exceptions.ControllerNullValuesException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -32,6 +33,18 @@ public class ControllerExceptionHandler {
         HttpStatus status = HttpStatus.BAD_REQUEST;
         error.setMessage(ex.getMessage());
         error.setError("Ausencia de valores obrigatórios 😶‍🌫️");
+        error.setTimestamp(Instant.now());
+        error.setStatus(status.value());
+        error.setPath(request.getRequestURI());
+        return new ResponseEntity<>(error, status);
+    }
+
+    @ExceptionHandler(ControllerDataViolationException.class)
+    public ResponseEntity<StandardError> dataViolation(ControllerDataViolationException ex, HttpServletRequest request) {
+        StandardError error = new StandardError();
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        error.setMessage(ex.getMessage());
+        error.setError("Violação de integridade do banco");
         error.setTimestamp(Instant.now());
         error.setStatus(status.value());
         error.setPath(request.getRequestURI());
