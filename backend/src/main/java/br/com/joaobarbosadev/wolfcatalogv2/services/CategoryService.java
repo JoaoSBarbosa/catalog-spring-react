@@ -10,6 +10,8 @@ import jakarta.persistence.EntityNotFoundException;
 import org.hibernate.boot.beanvalidation.IntegrationException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,10 +28,10 @@ public class CategoryService {
     }
 
     @Transactional(readOnly = true)
-    public List<CategoryDTO> findAll() {
-        List<Category> categoryList = categoryRepository.findAll();
+    public Page<CategoryDTO> findAll(PageRequest pageRequest ) {
+        Page<Category> categoryList = categoryRepository.findAll(pageRequest);
 
-        return categoryList.stream().map(CategoryDTO::new).toList();
+        return categoryList.map(CategoryDTO::new);
     }
 
     @Transactional(readOnly = true)

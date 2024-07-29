@@ -1,3 +1,12 @@
 INSERT INTO tb_category (name) VALUES('Livros');
 INSERT INTO tb_category (name) VALUES('Eletronicos');
 INSERT INTO tb_category (name) VALUES('Computadores');
+INSERT INTO tb_category (name) VALUES('Roupas');
+INSERT INTO tb_category (name) VALUES('Calçados');
+INSERT INTO tb_category (name) VALUES('Beleza');
+INSERT INTO tb_category (name) VALUES('Alimentos');
+INSERT INTO tb_category (name) VALUES('Móveis');
+INSERT INTO tb_category (name) VALUES('Esportes');
+INSERT INTO tb_category (name) VALUES('Brinquedos');
+INSERT INTO tb_category (name) VALUES('Ferramentas');
+INSERT INTO tb_category (name) VALUES('Jardinagem');
