@@ -2,6 +2,7 @@ package br.com.joaobarbosadev.wolfcatalogv2.entities;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.io.Serializable;
+import java.time.Instant;
 
 
 @Data
@@ -14,10 +15,13 @@ public class Category implements Serializable {
     private Long id;
 
     private String name;
+    private Instant createdAt;
+
     public Category() {}
 
-    public Category(Long id, String name) {
+    public Category(Long id, String name, Instant createdAt) {
         this.id = id;
         this.name = name;
+        this.createdAt = createdAt;
     }
 }
