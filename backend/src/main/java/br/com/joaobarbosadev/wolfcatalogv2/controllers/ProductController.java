@@ -24,15 +24,33 @@ public class ProductController {
             @RequestParam(value = "linesPerPage", defaultValue = "10") Integer linesPerPage,
             @RequestParam(value = "direction", defaultValue = "ASC") String direction,
             @RequestParam(value = "orderBy", defaultValue = "name") String orderBy
-    ){
+    ) {
         PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
         Page<ProductDTO> products = productService.findAll(pageRequest);
         return ResponseEntity.ok(products);
     }
 
     @GetMapping("/{productId}")
-    public ResponseEntity<ProductDTO> findById(@PathVariable Long productId){
+    public ResponseEntity<ProductDTO> findById(@PathVariable Long productId) {
         ProductDTO productDTO = productService.findById(productId);
         return ResponseEntity.ok(productDTO);
+    }
+
+    @PostMapping
+    public ResponseEntity<ProductDTO> insert(@RequestBody ProductDTO dto) {
+        dto = productService.save(dto);
+        return ResponseEntity.ok(dto);
+    }
+
+    @PutMapping("/{productId}")
+    public ResponseEntity<ProductDTO> update(@PathVariable Long productId, @RequestBody ProductDTO dto) {
+        dto = productService.update(dto, productId);
+        return ResponseEntity.ok(dto);
+    }
+
+    @DeleteMapping("/{productId}")
+    public ResponseEntity<Void> delete(@PathVariable Long productId) {
+        productService.delete(productId);
+        return ResponseEntity.noContent().build();
     }
 }
