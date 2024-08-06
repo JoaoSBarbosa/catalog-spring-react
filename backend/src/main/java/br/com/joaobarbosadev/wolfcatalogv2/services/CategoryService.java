@@ -12,6 +12,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,10 +28,16 @@ public class CategoryService {
         this.categoryRepository = categoryRepository;
     }
 
-    @Transactional(readOnly = true)
-    public Page<CategoryDTO> findAll(PageRequest pageRequest ) {
-        Page<Category> categoryList = categoryRepository.findAll(pageRequest);
+//    @Transactional(readOnly = true)
+//    public Page<CategoryDTO> findAll(PageRequest pageRequest ) {
+//        Page<Category> categoryList = categoryRepository.findAll(pageRequest);
+//
+//        return categoryList.map(CategoryDTO::new);
+//    }
 
+    @Transactional(readOnly = true)
+    public Page<CategoryDTO> findAll(Pageable pageable) {
+        Page<Category> categoryList = categoryRepository.findAll(pageable);
         return categoryList.map(CategoryDTO::new);
     }
 
