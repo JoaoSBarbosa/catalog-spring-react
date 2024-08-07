@@ -19,10 +19,12 @@ public class ProductRepositoryTests {
     private ProductRepository productRepository;
 
     private long existedId;
+    private long notExistedId;
 
     @BeforeEach
     void setUp() throws Exception {
         existedId = 1L;
+        notExistedId = 200L;
     }
 
     @Test
@@ -41,6 +43,19 @@ public class ProductRepositoryTests {
         product = productRepository.save(product);
         Assertions.assertNotNull(product.getId());
         Assertions.assertEquals(product.getId(), 26);
+    }
+    @Test
+    public void returnShuldReturnOptionNotEmptyWhithExistedId(){
+        Optional<Product> productOptional = productRepository.findById(existedId);
+        Assertions.assertNotNull(productOptional);
+    }
+
+    @Test
+    public void returnShouldReturnOptionEmptyWhithNotExistedId(){
+        Optional<Product> productOptional = productRepository.findById(notExistedId);
+        boolean isEmpty = true;
+        isEmpty = productOptional.isEmpty();
+        Assertions.assertTrue(isEmpty);
     }
 
 
