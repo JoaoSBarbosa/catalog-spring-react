@@ -13,6 +13,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,14 +38,19 @@ public class CategoryService {
 
     @Transactional(readOnly = true)
     public Page<CategoryDTO> findAll(Pageable pageable) {
+
         Page<Category> categoryList = categoryRepository.findAll(pageable);
-        return categoryList.map(CategoryDTO::new);
+
+        return categoryList.map((cat)-> new CategoryDTO(cat, cat.getProducts()));
+//        return categoryList.map(CategoryDTO::new);
     }
 
     @Transactional(readOnly = true)
     public CategoryDTO findByID(Long id) {
         Optional<Category> category = categoryRepository.findById(id);
-        return category.map(CategoryDTO::new).orElseThrow(() -> new ControllerNotFoundException("Não existe registros de categoria com o id informado: " + id));
+
+        return category.map((cat)-> new CategoryDTO(cat, cat.getProducts())).orElseThrow(()-> new ControllerNotFoundException("Não existe registros de categoria com o id informado: " + id));
+//        return category.map(CategoryDTO::new).orElseThrow(() -> new ControllerNotFoundException("Não existe registros de categoria com o id informado: " + id));
 
 //        return new CategoryDTO(category.get());
     }

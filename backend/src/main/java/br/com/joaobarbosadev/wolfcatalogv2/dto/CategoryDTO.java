@@ -1,13 +1,19 @@
 package br.com.joaobarbosadev.wolfcatalogv2.dto;
 
 import br.com.joaobarbosadev.wolfcatalogv2.entities.Category;
+import br.com.joaobarbosadev.wolfcatalogv2.entities.Product;
+import lombok.Data;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
+@Data
 public class CategoryDTO implements Serializable {
 
     private Long id;
     private String name;
+    private Set<ProductDTO> productDTOS = new HashSet<>();
 
     public CategoryDTO() {
     }
@@ -22,19 +28,10 @@ public class CategoryDTO implements Serializable {
         name = entity.getName();
     }
 
-    public Long getId() {
-        return id;
+    public CategoryDTO(Category entity, Set<Product> products) {
+        this(entity);
+        products.forEach(product -> productDTOS.add(new ProductDTO(product)));
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }

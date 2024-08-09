@@ -3,6 +3,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Data
@@ -18,6 +20,9 @@ public class Category implements Serializable {
     private Instant createdAt;
 
     public Category() {}
+
+    @ManyToMany(mappedBy = "categories")
+    private Set<Product> products = new HashSet<>();
 
     public Category(Long id, String name, Instant createdAt) {
         this.id = id;

@@ -58,5 +58,9 @@ public class ProductRepositoryTests {
         Assertions.assertTrue(isEmpty);
     }
 
+//    @Test
+//    public void deleteShouldThrowExceptionEntityNotFoundWhithNotExistedId(){
+//        Assertions.assertThrows()
+//    }
 
 }
