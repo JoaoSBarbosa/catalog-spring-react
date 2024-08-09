@@ -2,6 +2,8 @@ INSERT INTO tb_category (name, created_At) VALUES ('Livros', NOW());
 INSERT INTO tb_category (name, created_At) VALUES ('Eletrônicos', NOW());
 INSERT INTO tb_category (name, created_At) VALUES ('Computadores', NOW());
 
+
+
 INSERT INTO tb_product (name, price, date, description, img_url) VALUES ('O Senhor dos Anéis', 90.5, TIMESTAMP WITH TIME ZONE '2020-07-13T20:50:07.12345Z', 'Um clássico da literatura de fantasia, "O Senhor dos Anéis" é uma aventura épica que cativa leitores de todas as idades.', 'https://raw.githubusercontent.com/devsuperior/dscatalog-resources/master/backend/img/1-big.jpg');
 INSERT INTO tb_product (name, price, date, description, img_url) VALUES ('Smart TV', 2190.0, TIMESTAMP WITH TIME ZONE '2020-07-14T10:00:00Z', 'Smart TV com tecnologia de ponta, oferecendo uma experiência visual imersiva com alta definição e conectividade.', 'https://raw.githubusercontent.com/devsuperior/dscatalog-resources/master/backend/img/2-big.jpg');
 INSERT INTO tb_product (name, price, date, description, img_url) VALUES ('Macbook Pro', 1250.0, TIMESTAMP WITH TIME ZONE '2020-07-14T10:00:00Z', 'O MacBook Pro chega a um outro patamar com os chips M3, M3 Pro e M3 Max. Produzidos com a tecnologia de três nanômetros e uma nova arquitetura de GPU, são os chips mais avançados em um computador pessoal até hoje. E cada um traz mais desempenho e capacidade para profissionais.', 'https://raw.githubusercontent.com/JoaoSBarbosa/catalog-spring-react/dev/resources/img/25-big.jpg');
@@ -57,3 +59,18 @@ INSERT INTO tb_product_category (product_id, category_id) VALUES (22, 3);
 INSERT INTO tb_product_category (product_id, category_id) VALUES (23, 3);
 INSERT INTO tb_product_category (product_id, category_id) VALUES (24, 3);
 INSERT INTO tb_product_category (product_id, category_id) VALUES (25, 3);
+
+
+INSERT INTO tb_user (first_name, last_name, email, phone, password, uri_image) VALUES ('Alex', 'Brown', 'alex@gmail.com', '1199999999','$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG','');
+INSERT INTO tb_user (first_name, last_name, email, phone,password,uri_image) VALUES ('Maria', 'Green', 'maria@gmail.com', '1177777777','$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG','');
+INSERT INTO tb_user (first_name, last_name, email, phone,password,uri_image) VALUES ('João', 'Barbosa', 'jb@gmail.com', '1177777777','$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG','');
+
+INSERT INTO tb_role (authority) VALUES ('ROLE_OPERATOR');
+INSERT INTO tb_role (authority) VALUES ('ROLE_ADMIN');
+
+
+INSERT INTO tb_user_role (user_id, role_id) VALUES (1, 1);
+INSERT INTO tb_user_role (user_id, role_id) VALUES (2, 1);
+INSERT INTO tb_user_role (user_id, role_id) VALUES (2, 2);
+INSERT INTO tb_user_role (user_id, role_id) VALUES (3, 1);
+INSERT INTO tb_user_role (user_id, role_id) VALUES (3, 2);
