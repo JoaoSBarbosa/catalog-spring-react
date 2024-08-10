@@ -1,6 +1,7 @@
 package br.com.joaobarbosadev.wolfcatalogv2.controllers;
 
 import br.com.joaobarbosadev.wolfcatalogv2.dto.UserDTO;
+import br.com.joaobarbosadev.wolfcatalogv2.dto.UserInsertDTO;
 import br.com.joaobarbosadev.wolfcatalogv2.entities.User;
 import br.com.joaobarbosadev.wolfcatalogv2.services.UserService;
 import org.springframework.data.domain.Page;
@@ -33,15 +34,15 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserDTO> insert(@RequestBody UserDTO source){
-        source = userService.insert(source);
-        return ResponseEntity.ok().body(source);
+    public ResponseEntity<UserDTO> insert(@RequestBody UserInsertDTO source){
+        UserDTO dto = userService.insert(source);
+        return ResponseEntity.ok().body(dto);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserDTO> update(@RequestBody UserDTO source, @PathVariable Long id){
-        source = userService.update(source, id);
-        return ResponseEntity.ok().body(source);
+    public ResponseEntity<UserDTO> update(@RequestBody UserInsertDTO source, @PathVariable Long id){
+       UserDTO dto = userService.update(source, id);
+        return ResponseEntity.ok().body(dto);
     }
 
     @DeleteMapping("/{id}")

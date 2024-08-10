@@ -19,6 +19,9 @@ public class UserDTO implements Serializable {
 
     private Set<RoleDTO> roles = new HashSet<>();
 
+    public UserDTO() {
+
+    }
     public UserDTO(Long id, String firstName, String lastName, String email,  String phone, String uriImage) {
         this.id = id;
         this.firstName = firstName;
