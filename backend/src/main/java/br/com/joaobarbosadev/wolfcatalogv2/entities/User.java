@@ -21,7 +21,7 @@ public class User implements Serializable {
     private String phone;
     private String uriImage;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "tb_user_role",
             joinColumns = @JoinColumn(name = "user_id"),

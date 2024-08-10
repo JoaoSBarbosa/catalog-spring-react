@@ -21,7 +21,7 @@ public class Category implements Serializable {
 
     public Category() {}
 
-    @ManyToMany(mappedBy = "categories")
+    @ManyToMany(mappedBy = "categories", fetch = FetchType.EAGER)
     private Set<Product> products = new HashSet<>();
 
     public Category(Long id, String name, Instant createdAt) {
