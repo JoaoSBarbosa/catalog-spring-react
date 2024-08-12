@@ -2,6 +2,10 @@ package br.com.joaobarbosadev.wolfcatalogv2.dto;
 
 import br.com.joaobarbosadev.wolfcatalogv2.entities.Role;
 import br.com.joaobarbosadev.wolfcatalogv2.entities.User;
+import jakarta.persistence.Column;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -11,8 +15,11 @@ import java.util.Set;
 @Data
 public class UserDTO implements Serializable {
     private Long id;
+    @NotBlank(message = "Campo obrigatório")
     private String firstName;
     private String lastName;
+    @Email(message = "Por favor, insira um e-mail válido")
+    @Column(unique = true)
     private String email;
     private String phone;
     private String uriImage;

@@ -3,9 +3,13 @@ package br.com.joaobarbosadev.wolfcatalogv2.dto;
 import br.com.joaobarbosadev.wolfcatalogv2.entities.Role;
 import br.com.joaobarbosadev.wolfcatalogv2.entities.User;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Set;
 
+@Setter
+@Getter
 public class UserInsertDTO extends UserDTO{
     private String password;
 
@@ -26,11 +30,4 @@ public class UserInsertDTO extends UserDTO{
         super(entity, roles);
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }

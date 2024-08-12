@@ -2,6 +2,7 @@ package br.com.joaobarbosadev.wolfcatalogv2.controllers;
 
 import br.com.joaobarbosadev.wolfcatalogv2.dto.ProductDTO;
 import br.com.joaobarbosadev.wolfcatalogv2.services.ProductService;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -44,13 +45,13 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<ProductDTO> insert(@RequestBody ProductDTO dto) {
+    public ResponseEntity<ProductDTO> insert(@Valid @RequestBody ProductDTO dto) {
         dto = productService.save(dto);
         return ResponseEntity.ok(dto);
     }
 
     @PutMapping("/{productId}")
-    public ResponseEntity<ProductDTO> update(@PathVariable Long productId, @RequestBody ProductDTO dto) {
+    public ResponseEntity<ProductDTO> update(@PathVariable Long productId,@Valid @RequestBody ProductDTO dto) {
         dto = productService.update(dto, productId);
         return ResponseEntity.ok(dto);
     }

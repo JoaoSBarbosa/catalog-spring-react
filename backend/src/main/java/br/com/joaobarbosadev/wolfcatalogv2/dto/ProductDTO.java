@@ -3,6 +3,7 @@ package br.com.joaobarbosadev.wolfcatalogv2.dto;
 import br.com.joaobarbosadev.wolfcatalogv2.entities.Category;
 import br.com.joaobarbosadev.wolfcatalogv2.entities.Product;
 import jakarta.persistence.Column;
+import jakarta.validation.constraints.*;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -15,10 +16,15 @@ import java.util.Set;
 public class ProductDTO implements Serializable {
 
     private Long id;
+    @Size(min = 5, max = 60, message = "O campo não deve ter no minimo cinco e no máximo 60 caracteres")
+    @NotBlank(message = "O nome do produto não pode ser nulo")
     private String name;
     private String description;
+    @Positive(message = "Por favor, insira um valor positivo")
     private Double price;
     private String imgUrl;
+
+    @PastOrPresent(message = "A data do produto não pode ser futura")
     private Instant date;
     private List<CategoryDTO> categories = new ArrayList<>();
 

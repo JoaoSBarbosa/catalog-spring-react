@@ -4,6 +4,7 @@ import br.com.joaobarbosadev.wolfcatalogv2.dto.UserDTO;
 import br.com.joaobarbosadev.wolfcatalogv2.dto.UserInsertDTO;
 import br.com.joaobarbosadev.wolfcatalogv2.entities.User;
 import br.com.joaobarbosadev.wolfcatalogv2.services.UserService;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -34,13 +35,13 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserDTO> insert(@RequestBody UserInsertDTO source){
+    public ResponseEntity<UserDTO> insert(@Valid @RequestBody UserInsertDTO source){
         UserDTO dto = userService.insert(source);
         return ResponseEntity.ok().body(dto);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserDTO> update(@RequestBody UserInsertDTO source, @PathVariable Long id){
+    public ResponseEntity<UserDTO> update(@RequestBody UserInsertDTO source,@Valid @PathVariable Long id){
        UserDTO dto = userService.update(source, id);
         return ResponseEntity.ok().body(dto);
     }
