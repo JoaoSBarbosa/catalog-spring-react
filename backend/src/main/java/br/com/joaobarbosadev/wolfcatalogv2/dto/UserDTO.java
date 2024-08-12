@@ -15,7 +15,7 @@ import java.util.Set;
 @Data
 public class UserDTO implements Serializable {
     private Long id;
-    @NotBlank(message = "Campo obrigatório")
+    @NotBlank(message = "O campo 'Primeiro nome' é obrigatorio")
     private String firstName;
     private String lastName;
     @Email(message = "Por favor, insira um e-mail válido")

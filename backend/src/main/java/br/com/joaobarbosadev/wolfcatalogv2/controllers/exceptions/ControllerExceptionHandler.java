@@ -5,12 +5,15 @@ import br.com.joaobarbosadev.wolfcatalogv2.services.exceptions.ControllerDataVio
 import br.com.joaobarbosadev.wolfcatalogv2.services.exceptions.ControllerNotFoundException;
 import br.com.joaobarbosadev.wolfcatalogv2.services.exceptions.ControllerNullValuesException;
 import jakarta.servlet.http.HttpServletRequest;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.time.Instant;
+import java.util.Objects;
 
 @ControllerAdvice
 public class ControllerExceptionHandler {
@@ -48,6 +51,18 @@ public class ControllerExceptionHandler {
         error.setTimestamp(Instant.now());
         error.setStatus(status.value());
         error.setPath(request.getRequestURI());
+        return new ResponseEntity<>(error, status);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<StandardError> validations(MethodArgumentNotValidException ex, HttpServletRequest request) {
+        StandardError error = new StandardError();
+        HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
+        error.setMessage("Erro ao validar os dados do banco");
+        error.setTimestamp(Instant.now());
+        error.setStatus(status.value());
+        error.setPath(request.getRequestURI());
+        error.setError(Objects.requireNonNull(ex.getBindingResult().getFieldError()).getDefaultMessage());
         return new ResponseEntity<>(error, status);
     }
 }
