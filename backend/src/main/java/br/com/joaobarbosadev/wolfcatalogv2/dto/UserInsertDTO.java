@@ -2,12 +2,14 @@ package br.com.joaobarbosadev.wolfcatalogv2.dto;
 
 import br.com.joaobarbosadev.wolfcatalogv2.entities.Role;
 import br.com.joaobarbosadev.wolfcatalogv2.entities.User;
+import br.com.joaobarbosadev.wolfcatalogv2.services.validation.UserInsertValid;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Set;
 
+@UserInsertValid
 @Setter
 @Getter
 public class UserInsertDTO extends UserDTO{
