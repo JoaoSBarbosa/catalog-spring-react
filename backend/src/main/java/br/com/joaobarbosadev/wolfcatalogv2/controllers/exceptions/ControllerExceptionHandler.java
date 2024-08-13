@@ -1,6 +1,8 @@
 package br.com.joaobarbosadev.wolfcatalogv2.controllers.exceptions;
 
+import br.com.joaobarbosadev.wolfcatalogv2.component.exceptions.FieldMessage;
 import br.com.joaobarbosadev.wolfcatalogv2.component.exceptions.StandardError;
+import br.com.joaobarbosadev.wolfcatalogv2.component.exceptions.ValidationError;
 import br.com.joaobarbosadev.wolfcatalogv2.services.exceptions.ControllerDataViolationException;
 import br.com.joaobarbosadev.wolfcatalogv2.services.exceptions.ControllerNotFoundException;
 import br.com.joaobarbosadev.wolfcatalogv2.services.exceptions.ControllerNullValuesException;
@@ -8,6 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -55,14 +58,19 @@ public class ControllerExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<StandardError> validations(MethodArgumentNotValidException ex, HttpServletRequest request) {
-        StandardError error = new StandardError();
+    public ResponseEntity<ValidationError> validations(MethodArgumentNotValidException ex, HttpServletRequest request) {
+        ValidationError error = new ValidationError();
         HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
-        error.setMessage("Erro ao validar os dados do banco");
         error.setTimestamp(Instant.now());
         error.setStatus(status.value());
         error.setPath(request.getRequestURI());
-        error.setError(Objects.requireNonNull(ex.getBindingResult().getFieldError()).getDefaultMessage());
+        error.setError("Erro ao validar os dados do banco");
+        error.setMessage(ex.getMessage());
+
+
+        for(FieldError fieldError : ex.getBindingResult().getFieldErrors()) {
+            error.addFieldError(fieldError.getField(), fieldError.getDefaultMessage());
+        }
         return new ResponseEntity<>(error, status);
     }
 }

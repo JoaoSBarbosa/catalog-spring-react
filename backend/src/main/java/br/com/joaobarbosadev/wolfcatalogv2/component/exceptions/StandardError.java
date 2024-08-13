@@ -1,9 +1,12 @@
 package br.com.joaobarbosadev.wolfcatalogv2.component.exceptions;
 
 import lombok.Data;
+import org.springframework.validation.FieldError;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 public class StandardError implements Serializable {

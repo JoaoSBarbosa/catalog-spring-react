@@ -3,10 +3,9 @@ package br.com.joaobarbosadev.wolfcatalogv2.dto;
 import br.com.joaobarbosadev.wolfcatalogv2.entities.Role;
 import br.com.joaobarbosadev.wolfcatalogv2.entities.User;
 import jakarta.persistence.Column;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.*;
 import lombok.Data;
+import org.hibernate.validator.constraints.URL;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -15,13 +14,17 @@ import java.util.Set;
 @Data
 public class UserDTO implements Serializable {
     private Long id;
-    @NotBlank(message = "O campo 'Primeiro nome' é obrigatorio")
+    @NotBlank(message = "O campo 'Primeiro Nome' é obrigatório. Por favor, insira seu primeiro nome.")
     private String firstName;
+    @Size(max = 50, message = "O campo 'Sobrenome' não pode ter mais de 50 caracteres.")
     private String lastName;
-    @Email(message = "Por favor, insira um e-mail válido")
+    @Email(message = "Por favor, insira um endereço de e-mail válido.")
+    @NotBlank(message = "O campo 'E-mail' é obrigatório. Por favor, insira seu e-mail.")
     @Column(unique = true)
     private String email;
+    @Pattern(regexp = "\\d{10,15}", message = "O campo 'Telefone' deve conter entre 10 e 15 dígitos numéricos.")
     private String phone;
+    @URL(message = "Por favor, insira uma URL válida para a imagem.")
     private String uriImage;
 
     private Set<RoleDTO> roles = new HashSet<>();

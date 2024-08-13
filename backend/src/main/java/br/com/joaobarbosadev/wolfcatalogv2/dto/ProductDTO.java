@@ -5,6 +5,7 @@ import br.com.joaobarbosadev.wolfcatalogv2.entities.Product;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.*;
 import lombok.Data;
+import org.hibernate.validator.constraints.URL;
 
 import java.io.Serializable;
 import java.time.Instant;
@@ -16,15 +17,16 @@ import java.util.Set;
 public class ProductDTO implements Serializable {
 
     private Long id;
-    @Size(min = 5, max = 60, message = "O campo não deve ter no minimo cinco e no máximo 60 caracteres")
-    @NotBlank(message = "O nome do produto não pode ser nulo")
+    @Size(min = 5, max = 60, message = "O nome do produto deve ter entre 5 e 60 caracteres.")
+    @NotBlank(message = "O campo 'Nome do Produto' é obrigatório. Por favor, insira o nome do produto.")
     private String name;
     private String description;
-    @Positive(message = "Por favor, insira um valor positivo")
+    @Positive(message = "O preço deve ser um valor positivo. Por favor, insira um valor válido.")
     private Double price;
+    @URL(message = "Por favor, insira uma URL válida para a imagem.")
     private String imgUrl;
 
-    @PastOrPresent(message = "A data do produto não pode ser futura")
+    @PastOrPresent(message = "A data do produto não pode ser futura. Por favor, insira uma data válida.")
     private Instant date;
     private List<CategoryDTO> categories = new ArrayList<>();
 
