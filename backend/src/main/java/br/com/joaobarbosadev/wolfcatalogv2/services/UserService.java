@@ -3,6 +3,7 @@ package br.com.joaobarbosadev.wolfcatalogv2.services;
 import br.com.joaobarbosadev.wolfcatalogv2.dto.RoleDTO;
 import br.com.joaobarbosadev.wolfcatalogv2.dto.UserDTO;
 import br.com.joaobarbosadev.wolfcatalogv2.dto.UserInsertDTO;
+import br.com.joaobarbosadev.wolfcatalogv2.dto.UserUpdateDTO;
 import br.com.joaobarbosadev.wolfcatalogv2.entities.Role;
 import br.com.joaobarbosadev.wolfcatalogv2.entities.User;
 import br.com.joaobarbosadev.wolfcatalogv2.repositories.RoleRepository;
@@ -54,14 +55,14 @@ public class UserService {
     }
 
     @Transactional
-    public UserDTO update(UserInsertDTO source, Long id) {
+    public UserDTO update(UserUpdateDTO source, Long id) {
         try {
 
             User user = userRepository.getReferenceById(id);
 
             copyDtoToEntity(user, source);
 
-            if(source.getPassword() != null) user.setPassword(passwordEncoder(source.getPassword()));
+//            if(source.getPassword() != null) user.setPassword(passwordEncoder(source.getPassword()));
 
             user = userRepository.save(user);
             return new UserDTO(user);

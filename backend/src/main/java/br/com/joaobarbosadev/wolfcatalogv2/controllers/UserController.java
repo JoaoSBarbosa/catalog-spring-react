@@ -2,6 +2,7 @@ package br.com.joaobarbosadev.wolfcatalogv2.controllers;
 
 import br.com.joaobarbosadev.wolfcatalogv2.dto.UserDTO;
 import br.com.joaobarbosadev.wolfcatalogv2.dto.UserInsertDTO;
+import br.com.joaobarbosadev.wolfcatalogv2.dto.UserUpdateDTO;
 import br.com.joaobarbosadev.wolfcatalogv2.entities.User;
 import br.com.joaobarbosadev.wolfcatalogv2.services.UserService;
 import jakarta.validation.Valid;
@@ -41,7 +42,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserDTO> update(@RequestBody UserInsertDTO source,@Valid @PathVariable Long id){
+    public ResponseEntity<UserDTO> update(@RequestBody UserUpdateDTO source, @Valid @PathVariable Long id){
        UserDTO dto = userService.update(source, id);
         return ResponseEntity.ok().body(dto);
     }
