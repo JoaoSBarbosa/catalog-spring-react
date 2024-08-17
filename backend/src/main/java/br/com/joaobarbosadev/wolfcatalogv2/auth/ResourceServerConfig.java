@@ -52,6 +52,5 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .antMatchers(OPERATOR_OR_ADMIN).hasAnyRole("OPERATOR", "ADMIN") // Restringe acesso a rotas do array OPERATOR_OR_ADMIN.
                 .antMatchers(ADMIN).hasAnyRole("ADMIN") // Restringe acesso apenas a administradores nas rotas configurada no array ADMIN.
                 .anyRequest().authenticated();
-        super.configure(http);
     }
 }
