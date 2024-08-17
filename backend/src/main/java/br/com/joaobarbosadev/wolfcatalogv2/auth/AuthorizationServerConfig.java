@@ -1,5 +1,6 @@
 package br.com.joaobarbosadev.wolfcatalogv2.auth;
 
+import br.com.joaobarbosadev.wolfcatalogv2.component.jwt.JwtTokenEnhancer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,8 +12,12 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+
+import java.lang.reflect.Array;
+import java.util.Arrays;
 
 /**
  * Classe de configuração do servidor de autorização.
@@ -32,6 +37,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Autowired
     private AuthenticationManager authenticationManager; // Gerenciador de autenticação que processa autenticações
 
+    @Autowired
+    private JwtTokenEnhancer jwtTokenEnhancer;
     @Autowired
     @Qualifier("customAccessTokenConverter")
     private JwtAccessTokenConverter jwtAccessTokenConverter; // Conversor que manipula tokens JWT
@@ -81,8 +88,14 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
      */
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+
+        TokenEnhancerChain chain = new TokenEnhancerChain();
+        chain.setTokenEnhancers(Arrays.asList(jwtAccessTokenConverter, jwtTokenEnhancer));
+
         endpoints.authenticationManager(authenticationManager) // Define quem gerencia a autenticação
+
                 .tokenStore(tokenStore) // Define onde os tokens serão armazenados
-                .accessTokenConverter(jwtAccessTokenConverter); // Define o conversor que processa os tokens JWT
+                .accessTokenConverter(jwtAccessTokenConverter) // Define o conversor que processa os tokens JWT
+                .tokenEnhancer(chain);
     }
 }
