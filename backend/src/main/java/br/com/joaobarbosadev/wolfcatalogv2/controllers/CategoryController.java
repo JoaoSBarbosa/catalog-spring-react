@@ -4,7 +4,7 @@ import br.com.joaobarbosadev.wolfcatalogv2.dto.CategoryDTO;
 import br.com.joaobarbosadev.wolfcatalogv2.entities.Category;
 import br.com.joaobarbosadev.wolfcatalogv2.services.CategoryService;
 import br.com.joaobarbosadev.wolfcatalogv2.services.exceptions.ControllerNullValuesException;
-import jakarta.persistence.Id;
+import javax.persistence.Id;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;

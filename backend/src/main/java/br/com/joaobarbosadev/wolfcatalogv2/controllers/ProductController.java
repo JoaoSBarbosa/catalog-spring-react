@@ -2,7 +2,7 @@ package br.com.joaobarbosadev.wolfcatalogv2.controllers;
 
 import br.com.joaobarbosadev.wolfcatalogv2.dto.ProductDTO;
 import br.com.joaobarbosadev.wolfcatalogv2.services.ProductService;
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;

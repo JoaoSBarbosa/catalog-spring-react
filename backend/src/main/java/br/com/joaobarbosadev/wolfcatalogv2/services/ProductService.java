@@ -8,7 +8,7 @@ import br.com.joaobarbosadev.wolfcatalogv2.repositories.CategoryRepository;
 import br.com.joaobarbosadev.wolfcatalogv2.repositories.ProductRepository;
 import br.com.joaobarbosadev.wolfcatalogv2.services.exceptions.ControllerDataViolationException;
 import br.com.joaobarbosadev.wolfcatalogv2.services.exceptions.ControllerNotFoundException;
-import jakarta.persistence.EntityNotFoundException;
+import javax.persistence.EntityNotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -60,7 +60,7 @@ public class ProductService {
     @Transactional
     public ProductDTO update(ProductDTO dto, Long productId) {
         try {
-            Product product = productRepository.getReferenceById(productId);
+            Product product = productRepository.getOne(productId);
             copyDtoToEntity(dto, product);
             product = productRepository.save(product);
             return new ProductDTO(product, product.getCategories());
@@ -84,7 +84,7 @@ public class ProductService {
         if (!dto.getCategories().isEmpty()) {
             entity.getCategories().clear();
             for (CategoryDTO categoryDTO : dto.getCategories()) {
-                Category category = categoryRepository.getReferenceById(categoryDTO.getId());
+                Category category = categoryRepository.getOne(categoryDTO.getId());
                 entity.getCategories().add(category);
             }
         }

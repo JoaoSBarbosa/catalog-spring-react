@@ -10,16 +10,24 @@ import br.com.joaobarbosadev.wolfcatalogv2.repositories.RoleRepository;
 import br.com.joaobarbosadev.wolfcatalogv2.repositories.UserRepository;
 import br.com.joaobarbosadev.wolfcatalogv2.services.exceptions.ControllerDataViolationException;
 import br.com.joaobarbosadev.wolfcatalogv2.services.exceptions.ControllerNotFoundException;
-import jakarta.persistence.EntityNotFoundException;
+import javax.persistence.EntityNotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
+
+    private static Logger log = LoggerFactory.getLogger(UserService.class);
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
@@ -58,7 +66,7 @@ public class UserService {
     public UserDTO update(UserUpdateDTO source, Long id) {
         try {
 
-            User user = userRepository.getReferenceById(id);
+            User user = userRepository.getOne(id);
 
             copyDtoToEntity(user, source);
 
@@ -101,7 +109,7 @@ public class UserService {
             destine.getRoles().clear();
 
             for (RoleDTO role : source.getRoles()) {
-                Role roleEntity = roleRepository.getReferenceById(role.getId());
+                Role roleEntity = roleRepository.getOne(role.getId());
                 destine.getRoles().add(roleEntity);
 
             }
@@ -109,4 +117,15 @@ public class UserService {
     }
 
 
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findByEmail(username);
+
+        if (user == null) {
+            log.error("Usuário não encotrado com este email: " + username);
+            throw new UsernameNotFoundException("Email  " + username + "' não encontrado");
+        }
+        log.info("Usuário '"+ user.getUsername()+"' localizado atrvés do email: " + username);
+        return user;
+    }
 }

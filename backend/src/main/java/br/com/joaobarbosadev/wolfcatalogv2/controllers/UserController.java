@@ -5,7 +5,7 @@ import br.com.joaobarbosadev.wolfcatalogv2.dto.UserInsertDTO;
 import br.com.joaobarbosadev.wolfcatalogv2.dto.UserUpdateDTO;
 import br.com.joaobarbosadev.wolfcatalogv2.entities.User;
 import br.com.joaobarbosadev.wolfcatalogv2.services.UserService;
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;

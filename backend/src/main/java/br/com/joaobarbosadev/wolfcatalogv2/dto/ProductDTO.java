@@ -2,8 +2,8 @@ package br.com.joaobarbosadev.wolfcatalogv2.dto;
 
 import br.com.joaobarbosadev.wolfcatalogv2.entities.Category;
 import br.com.joaobarbosadev.wolfcatalogv2.entities.Product;
-import jakarta.persistence.Column;
-import jakarta.validation.constraints.*;
+import javax.persistence.Column;
+import javax.validation.constraints.*;
 import lombok.Data;
 import org.hibernate.validator.constraints.URL;
 

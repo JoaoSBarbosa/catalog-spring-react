@@ -6,8 +6,7 @@ import br.com.joaobarbosadev.wolfcatalogv2.repositories.CategoryRepository;
 import br.com.joaobarbosadev.wolfcatalogv2.services.exceptions.ControllerDataViolationException;
 import br.com.joaobarbosadev.wolfcatalogv2.services.exceptions.ControllerNotFoundException;
 import br.com.joaobarbosadev.wolfcatalogv2.services.exceptions.ControllerNullValuesException;
-import jakarta.persistence.EntityNotFoundException;
-import org.hibernate.boot.beanvalidation.IntegrationException;
+import javax.persistence.EntityNotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
@@ -70,7 +69,7 @@ public class CategoryService {
     @Transactional
     public CategoryDTO update(CategoryDTO categoryDTO, Long id) {
         try {
-            Category category = categoryRepository.getReferenceById(id);
+            Category category = categoryRepository.getOne(id);
             category.setName(categoryDTO.getName());
 
             category = categoryRepository.save(category);

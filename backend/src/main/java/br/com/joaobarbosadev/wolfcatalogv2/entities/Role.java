@@ -1,6 +1,6 @@
 package br.com.joaobarbosadev.wolfcatalogv2.entities;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.Data;
 
 import java.io.Serializable;

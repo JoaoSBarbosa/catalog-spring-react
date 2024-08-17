@@ -6,7 +6,7 @@ import br.com.joaobarbosadev.wolfcatalogv2.component.exceptions.ValidationError;
 import br.com.joaobarbosadev.wolfcatalogv2.services.exceptions.ControllerDataViolationException;
 import br.com.joaobarbosadev.wolfcatalogv2.services.exceptions.ControllerNotFoundException;
 import br.com.joaobarbosadev.wolfcatalogv2.services.exceptions.ControllerNullValuesException;
-import jakarta.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

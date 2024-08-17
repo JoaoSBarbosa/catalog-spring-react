@@ -5,9 +5,9 @@ import br.com.joaobarbosadev.wolfcatalogv2.dto.UserInsertDTO;
 import br.com.joaobarbosadev.wolfcatalogv2.dto.UserUpdateDTO;
 import br.com.joaobarbosadev.wolfcatalogv2.entities.User;
 import br.com.joaobarbosadev.wolfcatalogv2.repositories.UserRepository;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.validation.ConstraintValidator;
-import jakarta.validation.ConstraintValidatorContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerMapping;
 
