@@ -2,12 +2,15 @@ package br.com.joaobarbosadev.wolfcatalogv2.auth;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+
+import java.util.Arrays;
 
 /**
  * Configuração do servidor de recursos.
@@ -19,8 +22,11 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     // Injeta o token store que será usado para validar e analisar o token JWT nas requisições.
     @Autowired
     private JwtTokenStore tokenStore;
+    @Autowired
+    private Environment env;
+
     // Define as rotas públicas que podem ser acessadas sem autenticação.
-    private static final String[] PUBLIC = {"/oauth/token"};
+    private static final String[] PUBLIC = {"/oauth/token", "/h2-console/**"};
     // Define as rotas que podem ser acessadas por operadores ou administradores.
     private static final String[] OPERATOR_OR_ADMIN = {"/products/**", "/categories/**"};
     // Define as rotas que podem ser acessadas apenas por administradores.
@@ -29,7 +35,6 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     /**
      * Configura o servidor de recursos para usar o token store JWT.
-     * <p>
      * Este método garante que o servidor de recursos consiga decodificar e validar os tokens JWT
      * nas requisições feitas à aplicação.
      */
@@ -46,6 +51,12 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
      */
     @Override
     public void configure(HttpSecurity http) throws Exception {
+
+        // configuração para liberar banco h2
+        if (Arrays.asList(env.getActiveProfiles()).contains("test")) {
+            http.headers().frameOptions().disable();
+        }
+
         http.authorizeRequests()
                 .antMatchers(PUBLIC).permitAll() // Permite acesso irrestrito às rotas públicas (Array PUBLIC).
                 .antMatchers(HttpMethod.GET, OPERATOR_OR_ADMIN).permitAll() // Permite GET para rotas do array OPERATOR_OR_ADMIN.

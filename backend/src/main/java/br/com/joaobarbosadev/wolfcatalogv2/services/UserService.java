@@ -122,10 +122,10 @@ public class UserService implements UserDetailsService {
         User user = userRepository.findByEmail(username);
 
         if (user == null) {
-            log.error("Usuário não encotrado com este email: " + username);
+            log.error("Usuário não localizado com o email: " + username);
             throw new UsernameNotFoundException("Email  " + username + "' não encontrado");
         }
-        log.info("Usuário '"+ user.getUsername()+"' localizado atrvés do email: " + username);
+        log.info("Usuário '"+ user.getUsername()+"' localizado através do e-mail: " + username);
         return user;
     }
 }
