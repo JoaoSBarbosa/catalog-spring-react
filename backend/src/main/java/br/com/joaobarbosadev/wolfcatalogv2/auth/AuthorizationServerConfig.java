@@ -2,6 +2,7 @@ package br.com.joaobarbosadev.wolfcatalogv2.auth;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -22,6 +23,12 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
+    @Value("${security.oauth2.client.client-id}")
+    private String clientId;
+    @Value("${security.oauth2.client.client-secret}")
+    private String clientSecret;
+    @Value("${jwt.duration}")
+    private Integer jwtDuration;
     @Autowired
     private AuthenticationManager authenticationManager; // Gerenciador de autenticação que processa autenticações
 
@@ -58,11 +65,11 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
-                .withClient("wolfcatalog") // Define o ID do cliente
-                .secret(passwordEncoder.encode("wolfcatalog123")) // Define a senha secreta do cliente
+                .withClient(clientId) // Define o ID do cliente
+                .secret(passwordEncoder.encode(clientSecret)) // Define a senha secreta do cliente
                 .authorizedGrantTypes("password") // Define o tipo de concessão "password" para autenticação
                 .scopes("read", "write") // Define os escopos de acesso permitidos
-                .accessTokenValiditySeconds(86400); // Define a validade do token de acesso para 24 horas
+                .accessTokenValiditySeconds(jwtDuration); // Define a validade do token de acesso para 24 horas
     }
 
     /**
